@@ -1,0 +1,8 @@
+@font-face {
+    font-family: sm;
+    src: url(../media/fonts/sans-medium.woff2);
+}
+@font-face {
+    font-family: sr;
+    src: url(../media/fonts/serif-regular.woff2);
+}

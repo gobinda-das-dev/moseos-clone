@@ -1,0 +1,218 @@
+:root {
+    --fz-base: 16px;
+    --background: #171615;
+    --foreground: #fff;
+    --ff-primary: "Untitled Sans", system-ui, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* cursor: none; */
+}
+
+*::selection { background-color: var(--foreground); color: var(--background); }
+
+/* body::-webkit-scrollbar {
+    background-color: transparent;
+} */
+/* body::-webkit-scrollbar-thumb {
+    background: linear-gradient(transparent, aqua);
+    border-radius: 10px;
+    height: 200px;
+}
+body::-webkit-scrollbar-thumb:hover { background: linear-gradient(transparent, lightseagreen) } */
+
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+
+/* --Loader-- */
+.loader {
+    color: var(--background);
+    background-color: var(--foreground);
+}
+
+/* --Image Shower-- */
+.image-shower {
+    /* opacity: 0; */
+    /* visibility: hidden; */
+
+    img {
+        height: 84px;
+        width: 103px;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+        -webkit-user-drag: none;
+        user-select: none;
+
+        &[data-status="inactive"] {
+            display: none;
+        }
+
+        &[data-status="active"] {
+            display: block;
+        }
+    }
+}
+
+
+/* --Hero Section-- */
+.hero-img-container img {
+    width: 100%;
+    object-fit: cover;
+    transform: scale(2.1, 2.1);
+
+    &:first-child {
+        transform-origin: 40% 50%;
+    }
+
+    &:last-child {
+        transform-origin: 80% 50%;
+    }
+}
+
+
+/* --Date Section-- */
+#date {
+    .number {
+        width: 0.5em;
+        display: flex;
+        justify-content: center;
+        /* margin-right: 10px; */
+        height: 0.75em;
+        overflow: hidden;
+    }
+    
+    .strip {
+        transform: translateY(-.4em);
+
+        >div { font-family: sr; }
+
+    }
+}
+
+
+/* --Audio Section-- */
+#audio {
+
+    li {
+
+        &:hover {
+
+            >div {
+                transform: translateX(20px);
+            }
+
+            h2, div {
+                color: var(--background);
+                transition: color .3s, transform .3s;
+            }
+
+            >span { width: 100%; }
+
+            .btn-start-audio { border-color: var(--background); background-color: var(--background);}
+        }
+
+        .btn-start-audio #play-audio {
+            clip-path: polygon(85% 50%, 15% 0, 15% 100%);
+        }
+
+        span,
+        div,
+        .btn-start-audio {
+            transition-property: width, transform, background-color;
+            transition-duration: .3s;
+        }
+    }
+}
+
+
+
+/* --Clip Path Section-- */
+#outro .clip {
+    clip-path: polygon(0px 0px, 100% 0px, 100% 70%, 100% 100%, 0px 100%, 0px 70%);
+}
+
+
+
+/* --Tutorial Section-- */
+.arrow path { animation: arrowAnimation 3s infinite ease-in-out; }
+
+
+
+
+/* ---Scan Section--- */
+.mask {
+    clip-path: circle(var(--scan-mask, 0% at 57.5% 27%));
+}
+
+
+
+
+
+
+
+/* --Universal-- */
+.underline-hover {
+    position: relative;
+    overflow: hidden;
+
+    span {
+        position: absolute;
+        pointer-events: none;
+        bottom: 0;
+        right: 0;
+        width: 0;
+        height: 1px;
+        background-color: var(--foreground);
+    }
+}
+
+.video-container {
+    transition: all 1s cubic-bezier(0.87, 0, 0.13, 1);      
+}
+
+.play-video {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+
+    
+    svg { opacity: 0; }
+}
+
+
+
+
+/* ----Animations @Keyframes---- */
+@keyframes arrowAnimation {
+    0% {
+        stroke-dasharray: 127, 127;
+    }
+    50% {
+        stroke-dasharray: 64, 127;
+        transform: translateY(-64px);
+    }
+    100% {
+        stroke-dasharray: 127, 127;
+    }
+    /* --Redesigned by Gobinda-- giv credit (https://github.com/gobinda-das-dev) */
+}

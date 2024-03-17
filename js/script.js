@@ -40,6 +40,7 @@ function lenisFn() {
         wheelMultiplier: 2,
         duration: 1.5,
         easing: (x) => 1 - Math.pow(1 - x, 5),
+        syncTouch: false
     })
 
     function raf(time) {
@@ -49,6 +50,7 @@ function lenisFn() {
     }
 
     requestAnimationFrame(raf)
+    gsap.ticker.lagSmoothing(0);
 }
 
 function cursor() {
@@ -272,7 +274,7 @@ function loader() {
     .to(loader, {
         onUpdate: () => window.scrollTo(0, 0),
         top: "-100%",
-        duration: 2,
+        duration: window.innerWidth > 640 ? 2 : 4,
         ease: "expo.inOut",
         onComplete: () => {
             loaderCounter.textContent = 100;
@@ -285,7 +287,7 @@ function loader() {
     })
 
     .from("#hero .line span", {
-        y: "100%",
+        y: window.innerWidth > 700 ? "100%" : "120%",
         ease: "power2",
         duration: 1,
         stagger: .15,
@@ -313,7 +315,7 @@ function loader() {
             clearInterval(intervalId);
             loaderCounter.textContent = 100;
         }
-    }, 12);
+    }, window.innerWidth > 640 ? 12 : 24);
 
     imgShower.onmousemove = (event) => {
         if (images.length < maxImages) {
@@ -396,8 +398,8 @@ function heroAnimation() {
         scrollTrigger: {
             scroller: "body",
             trigger: ".hero-img-container img",
-            start: "top -80%",
-            end: "top 150%",
+            start: window.innerWidth > 700 ? "top -80%" : "top 0",
+            end: window.innerWidth > 700 ? "top 150%" : "top -10%",
             scrub: 5,
         }
     });
@@ -445,7 +447,7 @@ function dateAnimation() {
 }
 
 function introAnimation() {
-    pinAnimation("intro");
+    window.innerWidth > 640 && pinAnimation("intro");
 }
 
 function audioAnimation() {
@@ -602,18 +604,18 @@ function scanAnimation() {
 }
 
 function contextAnimation() {
-    pinAnimation("context");
+    window.innerWidth > 640 && pinAnimation("context");
     textAnimation("context");
 
     gsap.to(".a-context img", {
-        scale: 1.6,
+        scale: window.innerWidth > 640 ? 1.6 : 2,
         y: -60,
         ease: "none",
         scrollTrigger: {
             scroller: "body",
             trigger: ".a-context img",
-            start: "top 100%",
-            end: "top -100%",
+            start: window.innerWidth > 640 ? "top 100%" : "",
+            end: window.innerWidth > 640 ? "top -100%" : "top -50%",
             scrub: true,
         }
     })
@@ -624,18 +626,19 @@ function videosAnimation() {
 }
 
 function authorAnimation() {
-    pinAnimation("author");
+    window.innerWidth > 640 && pinAnimation("author");
     textAnimation("author");
 }
 
 function aboutAnimation() {
-    pinAnimation("about");
+    window.innerWidth > 640 && pinAnimation("about");
     textAnimation("about");
 }
 
 function outroAnimation() {
     gsap.set("#outro a", { opacity: 0 });
     const shareBtn = $("#outro button");
+    const w = window.innerWidth;
 
     gsap.to("#outro .clip", {
         clipPath: "polygon(0px 0px, 100% 0px, 58% 70%, 58% 100%, 42% 100%, 42% 70%)",
@@ -643,20 +646,14 @@ function outroAnimation() {
         scrollTrigger: {
             scroller: "body",
             trigger: "#outro .clip",
-            start: "top 85%",
-            end: "top -40%",
+            start: w > 640 ? "top 85%" : "top 100%",
+            end: w > 640 ? "top -40%" : "top 20%",
             scrub: true,
-        }
-    })
-    gsap.to("#outro .clip img", {
-        scale: 1,
-        ease: "none",
-        scrollTrigger: {
-            scroller: "body",
-            trigger: "#outro .clip img",
-            start: "top 85%",
-            end: "top -40%",
-            scrub: true,
+            onUpdate: p => {
+                gsap.to("#outro .clip img", {
+                    scale: 2 - p.progress
+                })
+            }
         }
     })
 
@@ -678,7 +675,7 @@ function outroAnimation() {
 
 
 function test() {
-    gsap.set('.loader, header, #hero, #date, #intro, #audio, #tutorial, #context, #scan, .image-shower', { display: 'none' })
+    gsap.set('.loader, header, #hero, #videos, #author, #date, #intro, #audio, #tutorial, #scan, .image-shower', { display: 'none' })
 }
 
 
